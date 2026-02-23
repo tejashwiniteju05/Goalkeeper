@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BallController : MonoBehaviour
+public class Ball : MonoBehaviour
 {
   public float speed = 8f;
-  public float goal = 20f;
+  public float goal = -20f;
   public float start = -2f;
   float[] lanes = { -2f, -1f, 0f, 1f, 2f };
   Vector3 startposition;
   Vector3 target;
   void Start()
   {
+    
     startposition = new Vector3(0, transform.position.y, start);
     transform.position = startposition;
     Sendball();
@@ -25,16 +26,26 @@ public class BallController : MonoBehaviour
     float randomX = lanes[Random.Range(0, lanes.Length)];
     target = new Vector3(randomX, startposition.y + 1f, goal);
   }
-  void OnTriggerEnter(Collider other)
-  {
-    if (other.tag == "Goal")
+    void OnCollisionEnter(Collision other)
     {
-      enabled = false;
+      StartCoroutine(Reset());
+        // if (other.gameObject.tag == "Goal")
+        // {
+          
+          
+        // }
+        // if (other.gameObject.tag == "Player")
+        // {
+        //   StartCoroutine(Reset());
+        // }
     }
-    if (other.tag == "Player")
+    IEnumerator Reset()
     {
+      enabled=false;
+      yield return new WaitForSeconds(1f);
       transform.position = startposition;
       Sendball();
+      enabled =true;
+      
     }
-  }
 }
