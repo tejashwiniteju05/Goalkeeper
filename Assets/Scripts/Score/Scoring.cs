@@ -6,27 +6,22 @@ using TMPro;
 public class Scoring : MonoBehaviour
 {
     private int Goals=0;
-    [SerializeField] 
-    private TextMeshProUGUI scoreText;  
+    [SerializeField]private TextMeshProUGUI scoreText;  
                 
 
     private void Start()
     {
-        scoreText.text = "Score: 0"; 
+        scoreText.text = "Goals: 0"; 
     }
 
-    
-   private void OnTriggerEnter(Collider other)
+
+    void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Ball"))
+        if(other.gameObject.tag=="Goalline")
         {
             Goals++;
-            scoreText.text="Score: "+Goals;
-            Destroy(other.gameObject);
-            
-
+            scoreText.text="Goals: "+Goals;
         }
     }
-   
-}
 
+}
